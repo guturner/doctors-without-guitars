@@ -1,0 +1,23 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+target/
+
+.metadata/
+.settings/
+
+.project
+.classpath
+
+# Database Files #
+*datasource.properties
+
+# API.AI Files #
+*apiai.properties
+
+# Keystore #
+keystore.p12

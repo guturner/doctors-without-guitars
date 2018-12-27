@@ -1,0 +1,64 @@
+<section th:fragment="nav(subtitle)">
+	<div class="header">
+		<div class="container">
+		
+			<nav class="navbar navbar-default">
+				<div class="navbar-header">					
+					<!-- Logo -->
+					<div class="logo">
+						<a th:href="@{/}">
+							<img th:src="@{img/logo.png}" style="width: 50%; height: 50%;"></img>
+						</a>
+					</div>
+				</div>
+			</nav>
+			
+			<!-- Social Media Buttons -->
+			<div class="w3ls_search">
+				<div class="cd-main-header">
+					<ul class="cd-header-buttons">
+						<li><a class="icon icon-border facebook" href="https://www.facebook.com/groups/1839522119662611/" target="_blank"></a></li>
+						<li><a class="icon icon-border wiki" href="http://www.d20pfsrd.com/" target="_blank"></a></li>
+					</ul>
+				</div>
+				<div id="cd-search" class="cd-search">
+					<input id="cd-search-val" name="Search" type="search" autocomplete="off"
+						placeholder="What is your quest?"></input>
+
+					<div class="cd-search-response" id="cd-search-response">
+						<div class="cd-search-response-inner">
+							<span class="cd-search-response-inner-val loading" id="loading">DM is writing</span>
+							<span class="cd-search-response-inner-val" id="cd-search-response-inner-val"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	
+	<!-- Navigation Links -->
+	<div class="service-breadcrumb">
+		<div class="container">
+			<div class="wthree_service_breadcrumb_left">
+			
+				<ul th:if="${user == null}" class="nav navbar-nav">
+					<li><a th:href="@{/login}">Login</a></li>
+					<li><a th:href="@{/register}">Register</a></li>
+				</ul>
+				
+				<ul th:if="${user != null}" class="nav navbar-nav">
+					<form id="logoutForm" method="post" th:action="@{/logout}"></form>
+					<li><a th:href="@{/profile}" th:text="${user}"></a></li>
+					<li><a th:href="@{/characters}">Characters</a></li>
+					<li><a th:href="@{/map}">Map</a></li>
+					<li><a href="#cd-search" class="cd-search-trigger" onclick="clearSearchResponse();">Ask DM</a></li>
+					<li><a onclick="document.getElementById('logoutForm').submit();">Logout</a></li>
+				</ul>
+			</div>
+			
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</section>

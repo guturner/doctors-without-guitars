@@ -1,0 +1,9 @@
+/* Custom CSS for OpenLayers 3 map. */
+
+.pathfinderMap {
+	outline: 0.15em solid orange;
+}
+
+.popover {
+	width: 500px;
+}

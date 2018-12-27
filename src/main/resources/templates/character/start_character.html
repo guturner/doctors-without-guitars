@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<section th:replace="fragments/theme/head :: head('Character Sheet')"></section>
+	<head>
+		<!-- Page-specific JS -->
+		<script th:src="@{js/character-sheet.js}"></script>
+	</head>
+	<body>
+		<section th:replace="fragments/theme/nav('Character Sheet')"></section>
+	
+		<div class="single">
+			<div class="container">
+			
+				<!-- Error Messages -->
+				<div class="row">
+					<div class="alert alert-dismissable alert-danger bad-login"
+						th:if="${errors != null and not #lists.isEmpty(errors)}">
+						<th:block data-th-each="error : ${errors}">
+							<p th:text="${error}">|Error message here.|</p>
+						</th:block>
+					</div>
+				</div>
+			
+				<h2>Hello Adventurer!</h2>
+				<p class="dolor">Before we begin, tell me about yourself...</p>
+	
+				<form id="saveForm" method="post" th:action="'/firstSteps?id=' + ${character?.id}" th:object="${characterSheetValidator}">
+					<div class="row center-contents lower">
+						<div class="col-md-12">Input Your Hit Die</div>
+						<input id="hitDie" th:field="*{hitDie}" />
+						<div class="input-hint">Hint: <span th:text="${character?.charClass?.name}"></span>s typically use <span id="hitDieHint" class="hand-cursor" th:text="${hitDieHint}"></span>.</div>
+					</div>
+					
+					<div class="row center-contents lower">
+						<div class="col-md-12">Decide Your Base Attributes</div>
+						<section th:replace="fragments/ui/character/stats_table :: stats_table('col-md-6 col-md-offset-3')"></section>
+					</div>
+					
+					<div class="row center-contents">
+						<h1 th:replace="fragments/theme/elements :: button(saveBtn, 'Save Character')"></h1>
+					</div>
+				</form>
+	
+			</div>
+		</div>
+	
+	</body>
+</html>

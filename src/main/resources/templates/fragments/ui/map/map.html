@@ -1,0 +1,51 @@
+<section th:fragment="map">
+
+	<table class="table">
+		<col width="25%" />
+  		<col width="65%" />
+  		<col width="10%" />
+		<thead>
+			<tr>
+				<th>Landmark</th>
+				<th>Description</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<select id="drpDown" class="selectpicker">
+						<th:block th:each="landmark : ${landmarks}">
+						
+							<th:block th:with="args='\'' + ${landmark.name} + '\', \'' + ${landmark.description} + '\', ' + ${landmark.longitude} + ', ' + ${landmark.latitude}">
+									
+								<option th:text="${landmark.name}" 
+								    th:value="${landmark.name}" 
+								    th:onclick="'setWaypointEvent(' + ${args} + ');'"></option>
+									    
+							</th:block>
+				
+						</th:block>
+						
+					</select>
+				</td>
+				<td><div id="description"></div></td>
+				<td>
+					<h1>
+						<a id="panBtn" class="label label-default">GO</a>
+					</h1>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="well">
+		<div id="map" class="pathfinderMap"/>
+	</div>
+	
+	<div style="display: none;">
+      <!-- Popup -->
+      <div id="popup" title=""></div>
+    </div>
+	
+</section>

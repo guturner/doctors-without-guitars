@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<section th:replace="fragments/theme/head :: head('Character Sheet')"></section>
+	<head>
+		<!-- Page-specific CSS / JS -->
+		<script th:src="@{js/form.js}"></script>
+		<script th:src="@{js/character-sheet.js}"></script>
+	</head>
+
+	<body>
+		<section th:replace="fragments/theme/nav('Character Sheet')"></section>
+	
+		<div class="single">
+			<div class="container">
+			
+				<!-- Error Messages -->
+				<div class="row">
+					<div class="alert alert-dismissable alert-danger bad-login"
+						th:if="${errors != null and not #lists.isEmpty(errors)}">
+						<th:block data-th-each="error : ${errors}">
+							<p th:text="${error}">|Error message here.|</p>
+						</th:block>
+					</div>
+				</div>
+	
+				<div class="row upper">
+					<div class="col-md-8 col-md-offset-4"> <!-- Half the whole page. -->
+						<div class="col-md-6 portrait-column"> <!-- Half of the half. -->
+							<div class="portrait-container">
+								<!-- Character Portrait -->
+								<div class="shine-on-hover column">
+									<figure>
+										<img id="characterPortrait" th:src="${character?.image}" class="img-responsive portrait" />
+									</figure>
+								</div>
+					
+								<!-- Character Class -->
+								<div class="portrait-label">
+									<h4><span id="classLabel" th:text="${character?.name}"></span></h4>
+								</div>
+								
+								<div th:if="${editMode == false}" id="progressBarParent" class="progress">
+									<div id="hpProgressBar">
+										<div id="hpText center-contents">
+											<span id="hpBarCurrent"
+												th:text="${character?.charSheet?.currentHp}"></span> / <span
+												id="hpBarMax" name="maxHp"
+												th:text="${character?.charSheet?.maxHp}"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Health Bar -->
+				<div class="row lower">
+					<div class="col-md-3 col-md-offset-3">
+						
+					</div>
+				</div>
+	
+				<div th:switch="${editMode}"  class="row">
+					<!-- Edit Buttons -->
+					<section th:case="false">
+						<div class="col-md-1">
+							<form id="editForm" method="post" th:action="'/editCharacterSheet?id=' + ${character?.id}">
+								<h1 th:replace="fragments/theme/elements :: button(editBtn, Edit)"></h1>
+							</form>
+						</div>
+						
+						<div class="col-md-2">
+							<h1 class="centered">
+								<a th:href="${'/pdf?id=' + character?.charSheet?.id}"><button class="label label-default">Download as PDF</button></a>
+							</h1>
+						</div>
+						
+					</section>
+		
+					<section th:case="*">
+						<div class="col-md-1">
+							<h1 th:replace="fragments/theme/elements :: button(saveBtn, Save)"></h1>
+						</div>
+						<div class="col-md-1">
+							<h1 th:replace="fragments/theme/elements :: button(cancelBtn, Cancel)"></h1>
+						</div>
+						
+						<script th:inline="javascript">
+							/*<![CDATA[*/
+							$('#cancelBtn').click(function() {
+								cancelCharacterSheet(/*[[${character?.id}]]*/);
+							});
+							/*]]>*/
+						</script>
+					</section>
+				</div>
+	
+				<div class="row lower pill center-contents">
+					<div class="row">
+						<div class="col-md-3"><a onclick="showPanel('#attributesPanel');" class="hand-cursor">Attributes</a></div>
+						<div class="col-md-3"><a onclick="showPanel('#propertiesPanel');" class="hand-cursor">Properties</a></div>
+						<div class="col-md-3"><a onclick="showPanel('#weaponsPanel');" class="hand-cursor">Weapons</a></div>
+						<div class="col-md-3"><a onclick="showPanel('#skillsPanel');" class="hand-cursor">Skill Book</a></div>
+					</div>
+				</div>
+	
+				<!-- Panels -->
+				<form id="saveForm" method="post" th:action="'/characterSheet?id=' + ${character?.id}" th:object="${characterSheetValidator}">
+					<div id="attributesPanel" name="panel" class="row">
+						<section th:replace="fragments/ui/character/stats_table :: stats_table('col-md-12')"></section>
+					</div>
+					
+					<div id="propertiesPanel" name="panel" class="row">
+						<section th:replace="fragments/ui/character/properties_table"></section>
+					</div>
+					
+					<div id="weaponsPanel" name="panel" class="row">
+						<section th:replace="fragments/ui/character/attack_properties_table"></section>
+						<section th:replace="fragments/ui/character/weapon_table"></section>
+					</div>
+					
+					<div id="skillsPanel" name="panel" class="row">
+						<section th:replace="fragments/ui/character/skills_table"></section>
+					</div>
+				</form>
+				
+				<p th:if="${editMode == false}" class="dolor"></p>
+				
+				<!-- Tip Panes -->
+				<section th:replace="fragments/ui/character/tips_combat_pane"></section>
+				<section th:replace="fragments/ui/character/tips_race_and_class_pane"></section>
+					
+				<div th:if="${editMode == false}">
+					<script>
+						disableFormElements();
+					</script>
+				</div>
+	
+			</div>
+		</div>
+	
+	</body>
+</html>

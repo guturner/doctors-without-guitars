@@ -1,0 +1,12 @@
+<head th:fragment="head(subtitle)">
+	<meta charset="utf-8"></meta>
+   	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+   	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+	<title th:text="'DWG : ' + ${subtitle}"></title>
+	
+	<link rel="icon" type="image/x-icon" href="img/icon.ico"></link>
+	
+	<section th:replace="fragments/tech/css"></section>
+	<section th:replace="fragments/tech/js"></section>
+</head>
