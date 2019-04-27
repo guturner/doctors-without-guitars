@@ -1,12 +1,10 @@
 # doctors-without-guitars
 A Pathfinder management application.
 
-[Doctors without Guitars (DEV)](https://doctors-without-guitars-dev.herokuapp.com/)
 ![alt text](readme/figure1.png "DwG Home")
 
 # Intro
 Demonstrates knowledge of:
-
 
 - Java
 - Spring Boot
